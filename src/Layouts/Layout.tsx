@@ -66,11 +66,6 @@ function Layout() {
         top={0}
         left={0}
         mih="100vh"
-        style={{
-          zIndex: 20,
-          boxShadow: '0 20px 45px rgba(0,0,0,0.35)',
-          borderRight: '1px solid rgba(255,255,255,0.08)',
-        }}
       >
         {/* Header com logo e toggle */}
         <Flex w='100%' align='end' justify='end' mb='lg'>
@@ -139,9 +134,6 @@ function Layout() {
             />
           ))}
         </Flex>
-
-
-
 
         {/* Footer com usuário */}
         <Flex

@@ -1,17 +1,18 @@
-import './App.css'
-import {MantineProvider} from '@mantine/core';
-import theme from '@/theme/theme.ts';
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+
+import './App.css';
+import { MantineProvider } from '@mantine/core';
+
 import AppRoutes from '@/AppRoutes.tsx';
-import '@mantine/core/styles.css'
-import '@mantine/dates/styles.css'
+import theme from '@/theme/theme.ts';
 
 function App() {
-
   return (
-    <MantineProvider theme={theme}>
-      <AppRoutes/>
+    <MantineProvider theme={theme} defaultColorScheme="dark" withCssVariables>
+      <AppRoutes />
     </MantineProvider>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -4,9 +4,10 @@ html, body, #root {
 }
 
 body {
-  background-color: #0f172a;
-  color: #f8fafc;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--mantine-color-body, #090f1c);
+  color: var(--mantine-color-text, #f8fafc);
+  font-family: var(--mantine-font-family, 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  transition: background-color 150ms ease, color 150ms ease;
 }
 
 #root {

@@ -1,251 +1,194 @@
-import type {MantineThemeOverride} from '@mantine/core';
+import type { MantineThemeOverride } from '@mantine/core';
+
+const baseFont =
+  'Inter, "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif';
 
 const theme: MantineThemeOverride = {
+  defaultColorScheme: 'dark',
   colors: {
-    dark: [
-      '#C9C9C9',
-      '#b8b8b8',
-      '#828282',
-      '#696969',
-      '#424242',
-      '#3b3b3b',
-      '#2e2e2e',
-      '#242424',
-      '#1f1f1f',
-      '#141414'
+    brand: [
+      '#eef2ff',
+      '#dce4ff',
+      '#bac7ff',
+      '#94a9ff',
+      '#6e8aff',
+      '#4e6ffc',
+      '#3658e5',
+      '#2a46c2',
+      '#1f369c',
+      '#162777'
     ],
-    gray: [
-      '#f8f9fa',
-      '#f1f3f5',
-      '#e9ecef',
-      '#dee2e6',
-      '#ced4da',
-      '#adb5bd',
-      '#868e96',
-      '#495057',
-      '#343a40',
-      '#212529'
+    midnight: [
+      '#f4f7fb',
+      '#e8edf5',
+      '#d5dceb',
+      '#b3c2d9',
+      '#8da6c7',
+      '#6a89b5',
+      '#4d6e9e',
+      '#39577f',
+      '#2a4160',
+      '#1c2b3f'
     ],
-    red: [
-      '#fff5f5',
-      '#ffe3e3',
-      '#ffc9c9',
-      '#ffa8a8',
-      '#ff8787',
-      '#ff6b6b',
-      '#fa5252',
-      '#f03e3e',
-      '#e03131',
-      '#c92a2a'
-    ],
-    pink: [
-      '#fff0f6',
-      '#ffdeeb',
-      '#fcc2d7',
-      '#faa2c1',
-      '#f783ac',
-      '#f06595',
-      '#e64980',
-      '#d6336c',
-      '#c2255c',
-      '#a61e4d'
-    ],
-    grape: [
-      '#f8f0fc',
-      '#f3d9fa',
-      '#eebefa',
-      '#e599f7',
-      '#da77f2',
-      '#cc5de8',
-      '#be4bdb',
-      '#ae3ec9',
-      '#9c36b5',
-      '#862e9c'
-    ],
-    violet: [
-      '#e2ddef',
-      '#dbd2f3',
-      '#d3c7f7',
-      '#ccbbfb',
-      '#c4b0fe',
-      '#c4b0ff',
-      '#794bfe',
-      '#3b02e3',
-      '#21017e',
-      '#060019'
-    ],
-    indigo: [
-      '#edf2ff',
-      '#dbe4ff',
-      '#bac8ff',
-      '#91a7ff',
-      '#748ffc',
-      '#5c7cfa',
-      '#4c6ef5',
-      '#4263eb',
-      '#3b5bdb',
-      '#364fc7'
-    ],
-    blue: [
-      '#e7f5ff',
-      '#d0ebff',
-      '#a5d8ff',
-      '#74c0fc',
-      '#4dabf7',
-      '#339af0',
-      '#228be6',
-      '#1c7ed6',
-      '#1971c2',
-      '#1864ab'
-    ],
-    cyan: [
-      '#e3fafc',
-      '#c5f6fa',
-      '#99e9f2',
-      '#66d9e8',
-      '#3bc9db',
-      '#22b8cf',
-      '#15aabf',
-      '#1098ad',
-      '#0c8599',
-      '#0b7285'
-    ],
-    teal: [
-      '#e6fcf5',
-      '#c3fae8',
-      '#96f2d7',
-      '#63e6be',
-      '#38d9a9',
-      '#20c997',
-      '#12b886',
-      '#0ca678',
-      '#099268',
-      '#087f5b'
-    ],
-    green: [
-      '#ebfbee',
-      '#d3f9d8',
-      '#b2f2bb',
-      '#8ce99a',
-      '#69db7c',
-      '#51cf66',
-      '#40c057',
-      '#37b24d',
-      '#2f9e44',
-      '#2b8a3e'
-    ],
-    lime: [
-      '#f4fce3',
-      '#e9fac8',
-      '#d8f5a2',
-      '#c0eb75',
-      '#a9e34b',
-      '#94d82d',
-      '#82c91e',
-      '#74b816',
-      '#66a80f',
-      '#5c940d'
-    ],
-    yellow: [
-      '#fff9db',
-      '#fff3bf',
-      '#ffec99',
-      '#ffe066',
-      '#ffd43b',
-      '#fcc419',
-      '#fab005',
-      '#f59f00',
-      '#f08c00',
-      '#e67700'
-    ],
-    orange: [
-      '#fff4e6',
-      '#ffe8cc',
-      '#ffd8a8',
-      '#ffc078',
-      '#ffa94d',
-      '#ff922b',
-      '#fd7e14',
-      '#f76707',
-      '#e8590c',
-      '#d9480f'
+    aurora: [
+      '#f7fefb',
+      '#dcfbf0',
+      '#b9f5e3',
+      '#93eccf',
+      '#6adfb7',
+      '#47d09f',
+      '#2cb586',
+      '#1f916a',
+      '#176f51',
+      '#0f4e39'
     ]
   },
-  primaryColor: 'blue',
+  primaryColor: 'brand',
   primaryShade: {
-    light: 6,
-    dark: 8
+    light: 5,
+    dark: 4
   },
-  white: '#fff',
-  black: '#000',
+  white: '#ffffff',
+  black: '#010409',
   defaultGradient: {
-    from: 'blue',
-    to: 'cyan',
-    deg: 45
+    from: 'brand',
+    to: 'aurora',
+    deg: 135
   },
-  fontFamily: 'Roboto',
-  fontFamilyMonospace: 'Roboto Mono',
+  fontFamily: baseFont,
+  fontFamilyMonospace:
+    'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
   headings: {
-    fontFamily: 'Roboto',
-    fontWeight: '700',
+    fontFamily: baseFont,
+    fontWeight: '600',
     sizes: {
-      h1: {
-        fontSize: 'calc(2.125rem * var(--mantine-scale))',
-        lineHeight: '1.3',
-        fontWeight: '700'
-      },
-      h2: {
-        fontSize: 'calc(1.625rem * var(--mantine-scale))',
-        lineHeight: '1.35',
-        fontWeight: '700'
-      },
-      h3: {
-        fontSize: 'calc(1.375rem * var(--mantine-scale))',
-        lineHeight: '1.4',
-        fontWeight: '700'
-      },
-      h4: {
-        fontSize: 'calc(1.125rem * var(--mantine-scale))',
-        lineHeight: '1.45',
-        fontWeight: '700'
-      },
-      h5: {
-        fontSize: 'calc(1rem * var(--mantine-scale))',
-        lineHeight: '1.5',
-        fontWeight: '700'
-      },
-      h6: {
-        fontSize: 'calc(0.875rem * var(--mantine-scale))',
-        lineHeight: '1.5',
-        fontWeight: '700'
-      }
+      h1: { fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', lineHeight: '1.1', fontWeight: '700' },
+      h2: { fontSize: 'clamp(2rem, 4vw, 2.75rem)', lineHeight: '1.2', fontWeight: '700' },
+      h3: { fontSize: 'clamp(1.75rem, 3vw, 2.25rem)', lineHeight: '1.25', fontWeight: '600' },
+      h4: { fontSize: 'clamp(1.5rem, 2.5vw, 1.85rem)', lineHeight: '1.3', fontWeight: '600' },
+      h5: { fontSize: '1.25rem', lineHeight: '1.35', fontWeight: '600' },
+      h6: { fontSize: '1.0625rem', lineHeight: '1.4', fontWeight: '600' }
     }
   },
-  scale: 1,
   radius: {
-    xs: 'calc(0.125rem * var(--mantine-scale))',
-    sm: 'calc(0.25rem * var(--mantine-scale))',
-    md: 'calc(0.5rem * var(--mantine-scale))',
-    lg: 'calc(1rem * var(--mantine-scale))',
-    xl: 'calc(2rem * var(--mantine-scale))'
-  },
-  spacing: {
-    xs: 'calc(0.625rem * var(--mantine-scale))',
-    sm: 'calc(0.75rem * var(--mantine-scale))',
-    md: 'calc(1rem * var(--mantine-scale))',
-    lg: 'calc(1.25rem * var(--mantine-scale))',
-    xl: 'calc(2rem * var(--mantine-scale))'
+    xs: '0.35rem',
+    sm: '0.5rem',
+    md: '0.75rem',
+    lg: '1.25rem',
+    xl: '1.75rem'
   },
   defaultRadius: 'md',
-  breakpoints: {
-    xs: '36em',
-    sm: '48em',
-    md: '62em',
-    lg: '75em',
-    xl: '88em'
+  spacing: {
+    xs: '0.5rem',
+    sm: '0.75rem',
+    md: '1rem',
+    lg: '1.5rem',
+    xl: '2rem'
   },
-  fontSmoothing: true,
-  focusRing: 'auto'
+  shadows: {
+    xs: '0 4px 12px rgba(15, 23, 42, 0.08)',
+    sm: '0 8px 24px rgba(15, 23, 42, 0.1)',
+    md: '0 16px 45px rgba(12, 18, 34, 0.22)',
+    lg: '0 30px 60px rgba(9, 14, 28, 0.35)'
+  },
+  other: {
+    surfaces: {
+      light: '#f5f7fb',
+      dark: '#090f1c'
+    },
+    panels: {
+      light: '#ffffff',
+      dark: 'rgba(9, 19, 35, 0.85)'
+    },
+    borders: {
+      light: 'rgba(9, 19, 35, 0.08)',
+      dark: 'rgba(255, 255, 255, 0.08)'
+    }
+  },
+  globalStyles: (theme) => {
+    const surface =
+      theme.colorScheme === 'dark'
+        ? theme.other?.surfaces?.dark ?? '#090f1c'
+        : theme.other?.surfaces?.light ?? '#f5f7fb';
+
+    const textColor =
+      theme.colorScheme === 'dark' ? theme.colors.midnight?.[0] ?? '#f8fafc' : theme.black;
+
+    return {
+      '*, *::before, *::after': {
+        boxSizing: 'border-box'
+      },
+      body: {
+        margin: 0,
+        padding: 0,
+        fontFamily: theme.fontFamily,
+        backgroundColor: surface,
+        color: textColor,
+        transition: 'background-color 150ms ease, color 150ms ease',
+        WebkitFontSmoothing: 'antialiased'
+      },
+      '#root': {
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }
+    };
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        radius: 'md',
+        size: 'md'
+      },
+      styles: (theme) => ({
+        root: {
+          fontWeight: 600,
+          boxShadow: theme.shadows.xs,
+          transition: 'transform 120ms ease, box-shadow 150ms ease',
+          '&:hover': {
+            transform: 'translateY(-1px)',
+            boxShadow: theme.shadows.sm
+          }
+        }
+      })
+    },
+    Card: {
+      defaultProps: {
+        padding: 'lg',
+        radius: 'lg',
+        shadow: 'sm'
+      },
+      styles: (theme) => ({
+        root: {
+          border: `1px solid ${
+            theme.colorScheme === 'dark'
+              ? theme.other?.borders?.dark ?? 'rgba(255,255,255,0.08)'
+              : theme.other?.borders?.light ?? 'rgba(15,23,42,0.08)'
+          }`,
+          backgroundColor:
+            theme.colorScheme === 'dark'
+              ? theme.other?.panels?.dark ?? 'rgba(9,19,35,0.9)'
+              : theme.other?.panels?.light ?? '#ffffff',
+          backdropFilter: 'blur(18px)'
+        }
+      })
+    },
+    NavLink: {
+      defaultProps: {
+        variant: 'light'
+      },
+      styles: (theme) => ({
+        root: {
+          borderRadius: theme.radius.md,
+          border: `1px solid ${
+            theme.colorScheme === 'dark'
+              ? theme.other?.borders?.dark ?? 'rgba(255,255,255,0.08)'
+              : theme.other?.borders?.light ?? 'rgba(15,23,42,0.08)'
+          }`
+        }
+      })
+    }
+  }
 };
 
 export default theme;

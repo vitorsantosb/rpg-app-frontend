@@ -24,6 +24,7 @@
     "@mantine/nprogress": "^8.3.6",
     "@mantine/spotlight": "^8.3.6",
     "@mantine/tiptap": "^8.3.6",
+    "@fontsource/inter": "^5.1.0",
     "@tiptap/extension-link": "^3.10.4",
     "@tiptap/pm": "^3.10.4",
     "@tiptap/react": "^3.10.4",
