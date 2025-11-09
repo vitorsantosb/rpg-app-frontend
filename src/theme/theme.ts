@@ -4,7 +4,7 @@ const baseFont =
   'Inter, "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif';
 
 const theme: MantineThemeOverride = {
-  defaultColorScheme: 'dark',
+  defaultColorScheme: "auto",
   colors: {
     brand: [
       '#eef2ff',
