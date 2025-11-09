@@ -1,9 +1,10 @@
 function GogoCommandPage() {
   return (
     <div>
-      GogoCommandPage
+      Gogo Command
     </div>
-  )
+  );
 }
 
 export default GogoCommandPage;
+

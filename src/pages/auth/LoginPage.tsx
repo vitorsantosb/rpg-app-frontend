@@ -1,15 +1,12 @@
-import {
-  Card,
-  Flex,
-  Title,
-} from '@mantine/core';
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { Card, Flex, Title } from '@mantine/core';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
+
 import LoginForm from '@/components/LoginPage/LoginForm.tsx';
 import RegisterForm from '@/components/LoginPage/RegisterForm.tsx';
 
-function AdminLoginPage() {
-  const [mode, setMode] = React.useState<'login' | 'register'>('login');
+function LoginPage() {
+  const [mode, setMode] = useState<'login' | 'register'>('login');
 
   return (
     <div
@@ -20,22 +17,22 @@ function AdminLoginPage() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         display: 'flex',
-        justifyContent: 'flex-start', // deixa o Card colado à esquerda
+        justifyContent: 'flex-start',
         alignItems: 'stretch',
       }}
     >
       <Card
         style={{
-          background: 'rgba(27, 12, 71, 0.85)', // fundo semi-transparente
+          background: 'rgba(27, 12, 71, 0.85)',
         }}
-        w={520}       // largura fixa do painel
-        h="100%"      // altura completa
+        w={520}
+        h="100%"
         radius="md"
         shadow="md"
         p="xl"
       >
         <Flex direction="column" justify="center" align="center" h="100%">
-          <Title c={'white'} order={2}>
+          <Title c="white" order={2}>
             {mode === 'login' ? 'Entrar' : 'Criar conta'}
           </Title>
 
@@ -67,8 +64,8 @@ function AdminLoginPage() {
         </Flex>
       </Card>
     </div>
-
   );
 }
 
-export default AdminLoginPage;
+export default LoginPage;
+

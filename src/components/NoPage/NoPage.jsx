@@ -1,7 +1,7 @@
 import React from "react";
 import { Title, Text, Button, Group, Center, Stack } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import {userRoutes} from '@/models/routes.ts';
+import {appRoutes} from '@/models/routes.ts';
 
 function NoPage() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function NoPage() {
         </Text>
 
         <Group justify="center" mt="md">
-          <Button size="md" onClick={() => navigate(userRoutes.HOMEPAGE)}>
+          <Button size="md" onClick={() => navigate(appRoutes.ROOT)}>
             Voltar para Home
           </Button>
         </Group>

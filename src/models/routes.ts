@@ -1,16 +1,14 @@
-export const userRoutes = {
-  HOMEPAGE: '/',
-  NOT_FOUND: '*',
-}
-
-export const adminRoutes = {
-  HOMEPAGE: '/admin',
+export const appRoutes = {
+  ROOT: '/',
+  AUTH: {
+    LOGIN: '/login',
+  },
   DASHBOARD: {
-    HOME: '/admin/dashboard',
+    ROOT: '/dashboard',
     ANALYTICS: 'analytics',
-    GOGO_SHELL: 'gogo-command',
+    GOGO_COMMAND: 'gogo-command',
     UPDATES: 'updates',
     USERS: 'users',
   },
   NOT_FOUND: '*',
-}
+};

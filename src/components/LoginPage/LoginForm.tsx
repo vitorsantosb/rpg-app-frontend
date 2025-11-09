@@ -1,7 +1,7 @@
 import React from 'react';
 import {Anchor, Button, Group, PasswordInput, Stack, TextInput} from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
-import {adminRoutes} from '../../models/routes.ts';
+import { appRoutes } from '../../models/routes.ts';
 
 function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const [email, setEmail] = React.useState('');
@@ -10,7 +10,7 @@ function LoginForm({ onSwitch }: { onSwitch: () => void }) {
   const navigate = useNavigate();
 
   function navigateToDashboard(){
-    navigate(`${adminRoutes.DASHBOARD.HOME}`);
+    navigate(appRoutes.DASHBOARD.ROOT);
   }
 
   function handleSubmit(e?: React.FormEvent) {

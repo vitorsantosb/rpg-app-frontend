@@ -1,24 +1,26 @@
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route } from 'react-router-dom';
 
-import {adminRoutes} from '@/models/routes.js';
+import { appRoutes } from '@/models/routes.ts';
 
-import RoutesWithNotFound from '@/utils/routes/notFound/RoutesWithNotFound'
+import RoutesWithNotFound from '@/utils/routes/notFound/RoutesWithNotFound';
 import Layout from '@/Layouts/Layout.tsx';
-import AdminPanelHome from '@/pages/AdminPage/Dashboard/AdminPanelHome.tsx';
-import AnalyticsPage from '@/pages/AdminPage/Dashboard/analitycs/AnalyticsPage.tsx';
-import GogoCommandPage from '@/pages/AdminPage/Dashboard/GogoCommand/GogoCommandPage.tsx';
-import AdminLoginPage from '@/pages/AdminPage/AdminLoginPage.tsx';
+import DashboardHomePage from '@/pages/dashboard/DashboardHomePage.tsx';
+import AnalyticsPage from '@/pages/dashboard/AnalyticsPage.tsx';
+import GogoCommandPage from '@/pages/dashboard/GogoCommandPage.tsx';
+import UpdateTimelinePage from '@/pages/dashboard/UpdateTimelinePage.tsx';
+import LoginPage from '@/pages/auth/LoginPage.tsx';
 
 function AppRoutes() {
   return (
     <Router>
       <RoutesWithNotFound>
-        <Route path="/" element={<AdminLoginPage/>}/>
-        <Route path={adminRoutes.HOMEPAGE} element={<AdminLoginPage/>}/>
-        <Route element={<Layout/>} path={adminRoutes.DASHBOARD.HOME}>
-          <Route index element={<AdminPanelHome/>}/>
-          <Route path={adminRoutes.DASHBOARD.ANALYTICS} element={<AnalyticsPage/>}/>
-          <Route path={adminRoutes.DASHBOARD.GOGO_SHELL} element={<GogoCommandPage/>}/>
+        <Route path={appRoutes.ROOT} element={<Navigate to={appRoutes.DASHBOARD.ROOT} replace />} />
+        <Route path={appRoutes.AUTH.LOGIN} element={<LoginPage />} />
+        <Route element={<Layout />} path={appRoutes.DASHBOARD.ROOT}>
+          <Route index element={<DashboardHomePage />} />
+          <Route path={appRoutes.DASHBOARD.ANALYTICS} element={<AnalyticsPage />} />
+          <Route path={appRoutes.DASHBOARD.GOGO_COMMAND} element={<GogoCommandPage />} />
+          <Route path={appRoutes.DASHBOARD.UPDATES} element={<UpdateTimelinePage />} />
         </Route>
       </RoutesWithNotFound>
     </Router>

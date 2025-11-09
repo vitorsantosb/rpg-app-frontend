@@ -1,9 +1,10 @@
 function AnalyticsPage() {
   return (
     <div>
-      conteudo 2
+      Conteúdo Analytics
     </div>
-  )
+  );
 }
 
 export default AnalyticsPage;
+
