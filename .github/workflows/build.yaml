@@ -24,8 +24,9 @@ jobs:
 
       - name: Semantic Release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx semantic-release
+
 
   build:
     needs: release
@@ -45,25 +46,24 @@ jobs:
         with:
           node-version: 20
 
-      # Clear Electron caches depending on OS
+      # Fix cache do Electron (Linux/macOS)
       - name: Clear Electron Cache (Linux/macOS)
         if: runner.os != 'Windows'
-        run: rm -rf ~/.cache/electron ~/.cache/electron-builder || true
+        run: rm -rf ~/.cache/electron || true
 
+      # Fix cache do Electron (Windows)
       - name: Clear Electron Cache (Windows)
         if: runner.os == 'Windows'
         run: |
-          if (Test-Path "$env:USERPROFILE\AppData\Local\electron") {
-            Remove-Item -Recurse -Force "$env:USERPROFILE\AppData\Local\electron"
-          }
-          if (Test-Path "$env:USERPROFILE\AppData\Local\electron-builder") {
-            Remove-Item -Recurse -Force "$env:USERPROFILE\AppData\Local\electron-builder"
-          }
+          Remove-Item -Path "$env:LOCALAPPDATA\electron\Cache" -Recurse -Force -ErrorAction SilentlyContinue;
+          Remove-Item -Path "$env:USERPROFILE\AppData\Local\electron\Cache" -Recurse -Force -ErrorAction SilentlyContinue;
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build Electron
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run build
 
       - name: Upload artifacts
@@ -78,4 +78,4 @@ jobs:
         with:
           files: release/**
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
