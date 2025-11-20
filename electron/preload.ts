@@ -1,4 +1,5 @@
 import { ipcRenderer, contextBridge } from 'electron'
+import {ElectronAPI} from './main/interface/electronApi.ts';
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -21,4 +22,16 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
   // You can expose other APTs you need here.
   // ...
-})
+});
+
+
+const electronAPI: ElectronAPI = {
+  setStorage: (key, value) => ipcRenderer.invoke('storage:set', key, value),
+  getStorage: (key) => ipcRenderer.invoke('storage:get', key),
+  removeStorage: (key) => ipcRenderer.invoke('storage:remove', key),
+  clearStorage: () => ipcRenderer.invoke('storage:clear'),
+  onMessage: (callback) => ipcRenderer.on('main-process-message', callback),
+};
+
+contextBridge.exposeInMainWorld('electronAPI', electronAPI);
+

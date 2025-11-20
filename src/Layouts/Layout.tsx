@@ -5,6 +5,8 @@ import { sidebarTreeElements } from '../models/sidebarTree.ts';
 import { RiMenuFoldLine, RiMenuUnfoldLine, RiLogoutCircleLine } from 'react-icons/ri';
 import { useMediaQuery } from '@mantine/hooks';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
+import {appRoutes} from '@/models/routes.ts';
+import { withAlpha } from '@/utils/withAlpha.utils.ts';
 
 function Layout() {
   const navigate = useNavigate();
@@ -31,37 +33,6 @@ function Layout() {
     return opened ? 260 : 76;
   }, [isDesktop, opened]);
 
-  const withAlpha = (value: string | undefined, alpha: number) => {
-    if (!value) {
-      return `rgba(0, 0, 0, ${alpha})`;
-    }
-
-    if (value.startsWith('#')) {
-      let hex = value.replace('#', '');
-      if (hex.length === 3) {
-        hex = hex
-          .split('')
-          .map((char) => char + char)
-          .join('');
-      }
-
-      const bigint = Number.parseInt(hex, 16);
-      const r = (bigint >> 16) & 255;
-      const g = (bigint >> 8) & 255;
-      const b = bigint & 255;
-      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-    }
-
-    if (value.startsWith('rgb')) {
-      return value.replace(/rgba?\(([^)]+)\)/, (_match, colorValues) => {
-        const [r, g, b] = colorValues.split(',').map((segment: string) => segment.trim());
-        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-      });
-    }
-
-    return value;
-  };
-
   const sidebarBackground = useMemo(() => {
     if (colorScheme === 'dark') {
       return `linear-gradient(180deg, ${withAlpha(theme.colors.midnight?.[9], 0.92)}, ${withAlpha(theme.colors.midnight?.[7], 0.78)})`;
@@ -86,14 +57,14 @@ function Layout() {
       return withAlpha(theme.colors.midnight?.[8], 0.55);
     }
     return withAlpha(theme.colors.brand?.[0], 0.9);
-  }, [colorScheme, theme]);
+  }, [colorScheme, theme.colors.brand, theme.colors.midnight]);
 
   const navLinkHoverBackground = useMemo(() => {
     if (colorScheme === 'dark') {
       return withAlpha(theme.colors.brand?.[5], 0.35);
     }
     return withAlpha(theme.colors.brand?.[3], 0.55);
-  }, [colorScheme, theme]);
+  }, [colorScheme, theme.colors.brand, theme.colors.midnight]);
 
   const navLinkTextColor = colorScheme === 'dark' ? theme.white : theme.colors.midnight[9];
   const navLinkDescriptionColor =
@@ -239,6 +210,7 @@ function Layout() {
           label={testVisible ? 'Logout' : undefined}
           leftSection={<RiLogoutCircleLine size={20}/>}
           variant="light"
+          onClick={() => navigate(appRoutes.AUTH.LOGIN)}
           styles={{
             root: {
               borderRadius: 10,

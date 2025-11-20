@@ -20,3 +20,11 @@ electron.contextBridge.exposeInMainWorld("ipcRenderer", {
   // You can expose other APTs you need here.
   // ...
 });
+const electronAPI = {
+  setStorage: (key, value) => electron.ipcRenderer.invoke("storage:set", key, value),
+  getStorage: (key) => electron.ipcRenderer.invoke("storage:get", key),
+  removeStorage: (key) => electron.ipcRenderer.invoke("storage:remove", key),
+  clearStorage: () => electron.ipcRenderer.invoke("storage:clear"),
+  onMessage: (callback) => electron.ipcRenderer.on("main-process-message", callback)
+};
+electron.contextBridge.exposeInMainWorld("electronAPI", electronAPI);

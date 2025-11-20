@@ -1,60 +1,86 @@
 import React from 'react';
 import {Anchor, Button, Group, PasswordInput, Stack, TextInput} from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
-import { appRoutes } from '../../models/routes.ts';
+import {useNavigate} from 'react-router-dom';
+import {appRoutes} from '@/models/routes.ts';
+import {NotificationMessages} from '@/components/notification/Notification.tsx';
+import {apiService} from '@/services/axios.service.ts';
 
-function LoginForm({ onSwitch }: { onSwitch: () => void }) {
+interface LoginResponse {
+  request?: {
+    token?: string;
+  };
+  message?: string;
+}
+
+function LoginForm({onSwitch}: { onSwitch: () => void }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
 
-  function navigateToDashboard(){
-    navigate(appRoutes.DASHBOARD.ROOT);
-  }
-
-  function handleSubmit(e?: React.FormEvent) {
+  async function handleSubmit(e?: React.FormEvent) {
     e?.preventDefault();
     setLoading(true);
 
-    setTimeout(() => {
-      console.log('login', { email, password });
-      setLoading(false);
+    console.log('📝 Tentando fazer login com:', { email });
 
-      navigateToDashboard();
-    }, 700);
+    try {
+      const response = await apiService.post<LoginResponse>('/user/login', {
+        email,
+        password,
+      });
+
+      console.log('✅ Login response:', response);
+
+      if (response.status === 404) {
+        return NotificationMessages.toasty.error('Falha ao realizar login, verifique suas credenciais e tente novamente.');
+      }
+
+      const token = response.data?.request?.token;
+      if (!token) {
+        return NotificationMessages.toasty.error('Falha ao realizar o login, tente novamente ou entre em contato um administrador.');
+      }
+
+      // Configura o token no serviço para próximas requisições
+      apiService.setUserJWT(token);
+
+      // Salva o token no storage do Electron
+      await window.electronAPI.setStorage('auth_token', token);
+      const saved = await window.electronAPI.getStorage('auth_token');
+      console.log('TOKEN SALVO:', saved);
+
+      await NotificationMessages.toasty.success('Login realizado com sucesso!');
+      navigate(appRoutes.DASHBOARD.ROOT);
+    } catch (err) {
+      console.error('💥 Erro completo no login:', err);
+      await NotificationMessages.toasty.error('Erro ao realizar login. Verifique suas credenciais e tente novamente.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <form onSubmit={handleSubmit} aria-label="formulário de login">
+    <form onSubmit={handleSubmit}>
       <Stack gap="md">
         <TextInput
-          c='white'
           label="E-mail"
           placeholder="seu@exemplo.com"
           required
           value={email}
           onChange={(e) => setEmail(e.currentTarget.value)}
-          autoComplete="email"
         />
-
         <PasswordInput
-          c='white'
           label="Senha"
           placeholder="••••••••"
           required
           value={password}
           onChange={(e) => setPassword(e.currentTarget.value)}
-          autoComplete="current-password"
         />
-
         <Group justify="space-between">
           <Anchor component="button" type="button" onClick={onSwitch}>
             Criar conta
           </Anchor>
-          <Button type="submit" loading={loading} aria-label="Entrar">
-            Entrar
-          </Button>
+          <Button type="submit" loading={loading}>Entrar</Button>
         </Group>
       </Stack>
     </form>

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@eslint/js": "^9.39.1",
+    "@fontsource/inter": "^5.1.0",
     "@mantine/carousel": "^8.3.6",
     "@mantine/charts": "^8.3.6",
     "@mantine/code-highlight": "^8.3.6",
@@ -24,7 +25,6 @@
     "@mantine/nprogress": "^8.3.6",
     "@mantine/spotlight": "^8.3.6",
     "@mantine/tiptap": "^8.3.6",
-    "@fontsource/inter": "^5.1.0",
     "@tiptap/extension-link": "^3.10.4",
     "@tiptap/pm": "^3.10.4",
     "@tiptap/react": "^3.10.4",
@@ -41,7 +41,8 @@
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.5",
     "recharts": "^3.3.0",
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "sweetalert2": "^11.26.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",

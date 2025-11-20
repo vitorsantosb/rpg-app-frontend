@@ -4,6 +4,7 @@ const baseFont =
   'Inter, "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif';
 
 const theme: MantineThemeOverride = {
+  // @ts-ignore
   defaultColorScheme: "auto",
   colors: {
     brand: [
@@ -105,7 +106,7 @@ const theme: MantineThemeOverride = {
       dark: 'rgba(255, 255, 255, 0.08)'
     }
   },
-  globalStyles: (theme) => {
+  globalStyles: (theme: any) => {
     const surface =
       theme.colorScheme === 'dark'
         ? theme.other?.surfaces?.dark ?? '#090f1c'
@@ -140,7 +141,7 @@ const theme: MantineThemeOverride = {
         radius: 'md',
         size: 'md'
       },
-      styles: (theme) => ({
+      styles: (theme: any) => ({
         root: {
           fontWeight: 600,
           boxShadow: theme.shadows.xs,
@@ -158,7 +159,7 @@ const theme: MantineThemeOverride = {
         radius: 'lg',
         shadow: 'sm'
       },
-      styles: (theme) => ({
+      styles: (theme: any) => ({
         root: {
           border: `1px solid ${
             theme.colorScheme === 'dark'
@@ -177,7 +178,7 @@ const theme: MantineThemeOverride = {
       defaultProps: {
         variant: 'light'
       },
-      styles: (theme) => ({
+      styles: (theme: any) => ({
         root: {
           borderRadius: theme.radius.md,
           border: `1px solid ${

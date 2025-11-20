@@ -1,4 +1,3 @@
-import React from "react";
 import { Title, Text, Button, Group, Center, Stack } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import {appRoutes} from '@/models/routes.ts';
