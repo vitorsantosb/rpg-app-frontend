@@ -19,7 +19,7 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm ci
 
       - name: Semantic Release
@@ -27,15 +27,12 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         run: npx semantic-release
 
-
   build:
     needs: release
     strategy:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout
@@ -48,16 +45,23 @@ jobs:
         with:
           node-version: 20
 
-      - name: Clean npm cache
-        run: npm cache clean --force
+      # Clear Electron caches depending on OS
+      - name: Clear Electron Cache (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: rm -rf ~/.cache/electron ~/.cache/electron-builder || true
 
-      - name: Remove Electron cache
+      - name: Clear Electron Cache (Windows)
+        if: runner.os == 'Windows'
         run: |
-          rm -rf ~/.cache/electron || true
-          rm -rf ~/.cache/electron-builder || true
+          if (Test-Path "$env:USERPROFILE\AppData\Local\electron") {
+            Remove-Item -Recurse -Force "$env:USERPROFILE\AppData\Local\electron"
+          }
+          if (Test-Path "$env:USERPROFILE\AppData\Local\electron-builder") {
+            Remove-Item -Recurse -Force "$env:USERPROFILE\AppData\Local\electron-builder"
+          }
 
       - name: Install dependencies
-        run: npm ci --force
+        run: npm ci
 
       - name: Build Electron
         run: npm run build
