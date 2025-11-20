@@ -7,6 +7,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,10 +29,14 @@ jobs:
         run: npx semantic-release
 
   build:
-    needs: release
+    needs: [release]
+    if: always()  # ← garante execução mesmo se release falhar
+
     strategy:
+      fail-fast: false  # ← não cancelar builds caso 1 falhe
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
+
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -45,12 +50,10 @@ jobs:
         with:
           node-version: 20
 
-      # Clear Electron Cache (Linux/macOS)
       - name: Clear Electron Cache (Linux/macOS)
         if: runner.os != 'Windows'
         run: rm -rf ~/.cache/electron ~/.cache/electron-builder || true
 
-      # Clear Electron Cache (Windows)
       - name: Clear Electron Cache (Windows)
         if: runner.os == 'Windows'
         run: |
@@ -60,8 +63,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Passa o GH_TOKEN (PAT) apenas para o step de build que precisa dele
-      - name: Build Electron (uses PAT for publishing)
+      - name: Build Electron
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run build
