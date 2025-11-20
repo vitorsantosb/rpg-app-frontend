@@ -7,12 +7,12 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -24,9 +24,9 @@ jobs:
 
       - name: Semantic Release
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npx semantic-release
-  
+
   build:
     needs: release
     strategy:
@@ -45,12 +45,12 @@ jobs:
         with:
           node-version: 20
 
-      # Fix cache do Electron (Linux/macOS)
+      # Clear Electron Cache (Linux/macOS)
       - name: Clear Electron Cache (Linux/macOS)
         if: runner.os != 'Windows'
-        run: rm -rf ~/.cache/electron || true
+        run: rm -rf ~/.cache/electron ~/.cache/electron-builder || true
 
-      # Fix cache do Electron (Windows)
+      # Clear Electron Cache (Windows)
       - name: Clear Electron Cache (Windows)
         if: runner.os == 'Windows'
         run: |
@@ -60,7 +60,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build Electron
+      # Passa o GH_TOKEN (PAT) apenas para o step de build que precisa dele
+      - name: Build Electron (uses PAT for publishing)
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run build
@@ -77,4 +78,4 @@ jobs:
         with:
           files: release/**
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
