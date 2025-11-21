@@ -7,6 +7,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 import {appRoutes} from '@/models/routes.ts';
 import { withAlpha } from '@/utils/withAlpha.utils.ts';
+import { useAuth } from '@/contexts/AuthContext.tsx';
 
 function Layout() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function Layout() {
   const { colorScheme } = useMantineColorScheme();
   const [opened, setOpened] = useState(true);
   const [testVisible, setTestVisible] = useState(true);
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     if (isDesktop) {
@@ -198,10 +200,13 @@ function Layout() {
           mt="auto"
           p="sm"
         >
-          <Avatar src="https://i.pravatar.cc/50" radius="xl"/>
+          <Avatar 
+            src={user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.username || user?.email || 'User')}&background=random`} 
+            radius="xl"
+          />
           {testVisible && (
             <Text c={navLinkTextColor} fw={500}>
-              Mr.Flufferson
+              {user?.username || user?.email || 'Usuário'}
             </Text>
           )}
         </Flex>
@@ -210,7 +215,7 @@ function Layout() {
           label={testVisible ? 'Logout' : undefined}
           leftSection={<RiLogoutCircleLine size={20}/>}
           variant="light"
-          onClick={() => navigate(appRoutes.AUTH.LOGIN)}
+          onClick={logout}
           styles={{
             root: {
               borderRadius: 10,

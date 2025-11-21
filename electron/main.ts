@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, globalShortcut } from 'electron';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { StorageSystem } from './main/storage';
@@ -24,11 +24,37 @@ function createWindow() {
     },
   });
 
-  win.webContents.on('before-input-event', (_, input) => {
+  // Método 1: Usando before-input-event (para eventos dentro da janela)
+  win.webContents.on('before-input-event', (event, input) => {
     if (input.key === 'F12') {
-      win?.webContents.openDevTools();
+      event.preventDefault();
+      toggleDevTools();
     }
   });
+
+  // Método 2: Usando globalShortcut (mais confiável)
+  app.whenReady().then(() => {
+    // Registra F12 como atalho global
+    globalShortcut.register('F12', () => {
+      toggleDevTools();
+    });
+
+    // Também registra Ctrl+Shift+I / Cmd+Option+I
+    globalShortcut.register('CommandOrControl+Shift+I', () => {
+      toggleDevTools();
+    });
+  });
+
+  // Função auxiliar para abrir/fechar DevTools
+  function toggleDevTools() {
+    if (win) {
+      if (win.webContents.isDevToolsOpened()) {
+        win.webContents.closeDevTools();
+      } else {
+        win.webContents.openDevTools();
+      }
+    }
+  }
 
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', new Date().toLocaleString());
@@ -51,6 +77,11 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+
+// Limpa os atalhos globais quando o app fecha
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll();
 });
 
 app.whenReady().then(createWindow);

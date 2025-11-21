@@ -1,9 +1,11 @@
 import { appRoutes } from './routes.ts';
-import { FiActivity } from 'react-icons/fi';
 import { TfiPanel } from 'react-icons/tfi';
 import { HiOutlineCommandLine } from 'react-icons/hi2';
 import { IoTrendingUp } from "react-icons/io5";
 import { FaUserFriends } from "react-icons/fa";
+import { GiScrollUnfurled } from "react-icons/gi";
+import {MdGroups2} from 'react-icons/md';
+
 
 export const sidebarTreeElements = [
   {
@@ -21,11 +23,18 @@ export const sidebarTreeElements = [
     url: `${appRoutes.DASHBOARD.USERS}`
   },
   {
-    label: 'Analytics',
-    icon: FiActivity,
+    label: 'Campanhas',
+    icon: GiScrollUnfurled,
     items: [],
-    description: 'Dashboard Analitico',
-    url: `${appRoutes.DASHBOARD.ROOT}/${appRoutes.DASHBOARD.ANALYTICS}`
+    description: 'Minhas campanhas',
+    url: `${appRoutes.DASHBOARD.ROOT}/${appRoutes.DASHBOARD.CAMPAIGNS}`
+  },
+  {
+    label: 'Sessões',
+    icon: MdGroups2,
+    items: [],
+    description: 'Minhas sessões',
+    url: `${appRoutes.DASHBOARD.ROOT}/${appRoutes.DASHBOARD.SESSIONS}`
   },
   {
     label: 'Gogo Command',

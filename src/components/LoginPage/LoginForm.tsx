@@ -4,6 +4,7 @@ import {useNavigate} from 'react-router-dom';
 import {appRoutes} from '@/models/routes.ts';
 import {NotificationMessages} from '@/components/notification/Notification.tsx';
 import {apiService} from '@/services/axios.service.ts';
+import {useAuth} from '@/contexts/AuthContext.tsx';
 
 interface LoginResponse {
   request?: {
@@ -17,6 +18,7 @@ function LoginForm({onSwitch}: { onSwitch: () => void }) {
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   async function handleSubmit(e?: React.FormEvent) {
     e?.preventDefault();
@@ -41,13 +43,8 @@ function LoginForm({onSwitch}: { onSwitch: () => void }) {
         return NotificationMessages.toasty.error('Falha ao realizar o login, tente novamente ou entre em contato um administrador.');
       }
 
-      // Configura o token no serviço para próximas requisições
-      apiService.setUserJWT(token);
-
-      // Salva o token no storage do Electron
-      await window.electronAPI.setStorage('auth_token', token);
-      const saved = await window.electronAPI.getStorage('auth_token');
-      console.log('TOKEN SALVO:', saved);
+      // Usa o contexto de autenticação para fazer login
+      await login(token);
 
       await NotificationMessages.toasty.success('Login realizado com sucesso!');
       navigate(appRoutes.DASHBOARD.ROOT);

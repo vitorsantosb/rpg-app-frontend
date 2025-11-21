@@ -5,7 +5,8 @@ export const appRoutes = {
   },
   DASHBOARD: {
     ROOT: '/dashboard',
-    ANALYTICS: 'analytics',
+    CAMPAIGNS: 'campaigns',
+    SESSIONS: 'sessions',
     GOGO_COMMAND: 'gogo-command',
     UPDATES: 'updates',
     USERS: 'users',

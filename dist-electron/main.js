@@ -1,4 +1,4 @@
-import { app, safeStorage, BrowserWindow, ipcMain } from "electron";
+import { app, safeStorage, BrowserWindow, globalShortcut, ipcMain } from "electron";
 import { fileURLToPath } from "node:url";
 import path$1 from "node:path";
 import fs from "fs";
@@ -81,11 +81,29 @@ function createWindow() {
       preload: path$1.join(__dirname$1, "preload.mjs")
     }
   });
-  win.webContents.on("before-input-event", (_, input) => {
+  win.webContents.on("before-input-event", (event, input) => {
     if (input.key === "F12") {
-      win?.webContents.openDevTools();
+      event.preventDefault();
+      toggleDevTools();
     }
   });
+  app.whenReady().then(() => {
+    globalShortcut.register("F12", () => {
+      toggleDevTools();
+    });
+    globalShortcut.register("CommandOrControl+Shift+I", () => {
+      toggleDevTools();
+    });
+  });
+  function toggleDevTools() {
+    if (win) {
+      if (win.webContents.isDevToolsOpened()) {
+        win.webContents.closeDevTools();
+      } else {
+        win.webContents.openDevTools();
+      }
+    }
+  }
   win.webContents.on("did-finish-load", () => {
     win?.webContents.send("main-process-message", (/* @__PURE__ */ new Date()).toLocaleString());
   });
@@ -103,6 +121,9 @@ app.on("window-all-closed", () => {
 });
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
+});
+app.on("will-quit", () => {
+  globalShortcut.unregisterAll();
 });
 app.whenReady().then(createWindow);
 const storage = new StorageSystem("userData");
